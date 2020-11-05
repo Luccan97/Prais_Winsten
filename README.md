@@ -5,10 +5,12 @@
 
 ## Qual fenômeno?
 
-#### Bom, a idéia do projeto é observar o comportamento do indicador Coeficiente de Mortalidade Infantil (CMI) no município de São Paulo (MSP) ao longo do tempo, captar a sua tendência temporal e quantificar a partir da regressão de Prais Winsten a porcentagem de variação anual desse indicador. Após vizualizarmos o comportamento do CMI para MSP, vamos desagregar essa informação por Distrito Administrativo (DA) e descobrir se existe uma iniquidade evidente atribuída ao fator espacial.
+#### Bom, a idéia do projeto é observar o comportamento do indicador Coeficiente de Mortalidade Infantil (CMI) no município de São Paulo (MSP) ao longo do tempo, captar a sua tendência temporal e quantificar a partir da regressão de Prais Winsten a porcentagem de variação anual desse indicador. 
+#### Após vizualizarmos o comportamento do CMI para MSP, vamos desagregar essa informação por Distrito Administrativo (DA) e descobrir se existe uma iniquidade evidente atribuída ao fator espacial.
 
-## Direto ao assunto! Após coleta e organização, meu banco de dados inicial está assim:
-###### Fonte dos dados de CMI por DA e para MSP: SINASC, 2020.
+## Direto ao assunto!Temos a nossa série temporal anual (2013-2019) nas linhas, e os Distritos nas colunas.
+## Após coleta e organização, essa é a cara do banco de dados inicial:
+###### Fonte dos dados: Sistema de Informações de Mortalidade (SIM), 2020.
 
 | Ano  | Água Rasa   | Alto de Pinheiros | Anhanguera  | Aricanduva  | Artur Alvim | Bela Vista  | Belém       | Bom Retiro  | Brás        | Brasilândia | Cachoeirinha | Cambuci     | Campo Belo  | Campo Grande | Campo Limpo | Cangaíba    | Capão Redondo | Carrão      | Casa Verde  | Cidade Ademar | Cidade Dutra | Cidade Líder | Cidade Tiradentes | Consolação  | Cursino     | Ermelino Matarazzo | Freguesia do Ó | Grajaú      | Guaianases  | Iguatemi    | Ipiranga    | Itaim Bibi  | Itaim Paulista | Itaquera    | Jabaquara   | Jaçanã      | Jaguara     | Jaguaré     | Jaraguá     | Jardim Ângela | Jardim Helena | Jardim São Luís | José Bonifácio | Lajeado     | Lapa        | Liberdade   | Limão       | Mandaqui    | Moema       | Mooca       | Morumbi     | Parelheiros | Pari        | Parque do Carmo | Pedreira    | Penha       | Perdizes    | Perus       | Pinheiros   | Pirituba    | Ponte Rasa  | Raposo Tavares | República   | Rio Pequeno | Sacomã      | Santa Cecília | Santana     | Santo Amaro | São Domingos | São Lucas   | São Mateus  | São Miguel  | São Rafael  | Sapopemba   | Saúde       | Sé          | Socorro     | Tatuapé     | Tremembé    | Tucuruvi    | Vila Andrade | Vila Curuçá | Vila Formosa | Vila Guilherme | Vila Jacuí  | Vila Leopoldina | Vila Maria  | Vila Mariana | Vila Matilde | Vila Medeiros | Vila Prudente | Vila Sônia  | MSP         |
 |------|-------------|-------------------|-------------|-------------|-------------|-------------|-------------|-------------|-------------|-------------|--------------|-------------|-------------|--------------|-------------|-------------|---------------|-------------|-------------|---------------|--------------|--------------|-------------------|-------------|-------------|--------------------|----------------|-------------|-------------|-------------|-------------|-------------|----------------|-------------|-------------|-------------|-------------|-------------|-------------|---------------|---------------|-----------------|----------------|-------------|-------------|-------------|-------------|-------------|-------------|-------------|-------------|-------------|-------------|-----------------|-------------|-------------|-------------|-------------|-------------|-------------|-------------|----------------|-------------|-------------|-------------|---------------|-------------|-------------|--------------|-------------|-------------|-------------|-------------|-------------|-------------|-------------|-------------|-------------|-------------|-------------|--------------|-------------|--------------|----------------|-------------|-----------------|-------------|--------------|--------------|---------------|---------------|-------------|-------------|
@@ -21,6 +23,67 @@
 | 2019 | 5,050505051 | 3,225806452       | 7,441860465 | 7,279344859 | 4,125412541 | 14,17322835 | 6,315789474 | 5,780346821 | 19,49025487 | 18,91040072 | 12,07327227  | 5,870841487 | 7,281553398 | 14,22594142  | 10,4638009  | 13,02460203 | 10,58070866   | 10,97560976 | 16,66666667 | 14,61988304   | 11,96449247  | 12,76813075  | 11,68939605       | 8,152173913 | 11,07594937 | 17,59708738        | 10,56556868    | 12,64637002 | 16,35768811 | 12,8314799  | 8,02919708  | 3,915426782 | 12,03758074    | 11,80599872 | 8,037997808 | 13,84364821 | 7,01754386  | 8,641975309 | 11,97206518 | 13,27592393   | 15,34526854   | 10,8805668      | 10             | 10,06944444 | 5,044136192 | 8,174386921 | 11,09057301 | 4,591368228 | 2,493765586 | 9,592326139 | 16,63893511 | 13,03680982 | 14,28571429 | 10,40681173     | 11,05216622 | 11,4213198  | 3,386004515 | 10,80246914 | 4,846526656 | 13,47449471 | 11,01928375 | 6,806930693    | 6,420545746 | 10,12373453 | 9,644364075 | 9,626955475   | 9,803921569 | 11,65501166 | 8,387698043  | 8,274984087 | 9,218612818 | 20,2757502  | 14,21590404 | 12,20462218 | 6,589785832 | 5,012531328 | 19,10828025 | 5,336179296 | 16,3026761  | 10,48218029 | 4,460665045  | 9,476534296 | 12,93103448  | 5,031446541    | 14,96259352 | 3,787878788     | 13,95348837 | 5,733005733  | 12,3253903   | 11,5194734    | 9,577015164   | 9,453072248 | 11,18671215 |
 
 
+## Vamos importar os dados csv para o ambiente do RStudio  
+## Plotar um gráfico utilizando pacote ggplot2 e vizualizar a distribuição temporal do CMI para MSP.
+
+  <p align="center">
+  <img src="https://raw.githubusercontent.com/Luccan97/Prais_Winsten/master/Rplot.png" />
+</p>
+
+## Além de uma tímida tendência descrescente, o gráfico não nos diz muito... Portanto, vamos rodar o algorítmo de Prais Winsten
+
+```
+setwd("C:\\Users\\User\\Desktop\\projetos\\script_pw")
+
+Dados <- read.csv("cmi_msp_da_2013_2019.csv", sep = ";", dec = ",", encoding = "windows-1250")
+
+# Filtrando só os dados para o município
+MSP <- Dados[,c(1,94)]
+
+# Pacotes necessários
+library(prais)
+library(dplyr)
+
+dataset_length <- length(names(MSP))
+
+#Transformando valores em log
+
+for (i in 2:dataset_length) {
+  MSP[,i] <- log10(MSP[,i])
+}
+
+# Função Prais Winsten
+pw_resultados <- lapply(names(MSP)[-1], function(a){
+  resp <- paste0("`", a, "`")
+  fmla <- paste(resp, "Ano", sep = "~")
+  fmla <- as.formula(fmla)
+  pw <- prais_winsten(fmla, data = MSP)
+  cf <- coef(summary(pw))[2, ]
+  cbind.data.frame(coluna = a, t(cf))
+})
+
+pw_resultados_MSP <- do.call(rbind, pw_resultados)
+
+
+bmin <- pw_resultados_MSP$Estimate - (1.96 *pw_resultados_MSP$`Std. Error`)
+bmax <- pw_resultados_MSP$Estimate + (1.96 *pw_resultados_MSP$`Std. Error`)
+
+ICmin <- (-1 + exp(bmin))*100
+ICmax <- (-1 + exp(bmax))*100
+ICmin <- format(round(ICmin, 2), nsmall = 2)
+ICmax <- format(round(ICmax, 2), nsmall = 2)
+
+pw_resultados_MSP <- mutate(pw_resultados_MSP, APC = (-1 + exp(Estimate))*100,  IC = paste("(", ICmin," / ", ICmax, ")"))
+
+head(pw_resultados_MSP)
+
+# Exportando arquivo csv com os resultados
+write.table(pw_resultados_MSP, file = "pw_resultados.csv", sep = "\t", na = "", quote = FALSE, dec = ",")
+
+
+```
+
+## Vamos obsevar os resultados!
 
 
 
