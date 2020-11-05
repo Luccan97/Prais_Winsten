@@ -237,9 +237,42 @@ write.table(pw_resultados_Dados, file = "pw_resultados.csv", sep = "\t", na = ""
 | MSP                       | 0,000356731  | 0,000836568 | 0,426422089  | 0,69       | 0,04  | (  -0.13  /   0.20 ) |
 
 
-## Agora, farei um filtro para observarmos apenas os resultados com valor P < 0,05
+### Agora, farei um filtro para observarmos apenas os resultados significantes (com valor P < 0,05)
+
+Os Distritos que apresentam valor de P maior que 0,05, interpreta-se que existe uma tendência temporal estacionária! 
+```
+P_sig <- filter(pw_resultados_Dados, pw_resultados_Dados$`Pr(>|t|)` <= 0.05)
+
+P_sig_ordenado <- arrange(P_sig, desc(P_sig$APC))
+
+write.table(P_sig_ordenado, file = "P_sig.csv", sep = "\t", na = "", quote = FALSE, dec = ",")
+
+```
+
+### Primeiro, vamos obsevrar os Distritos cuja porcentagem de variação anual é positiva! Ou seja, distritos onde o Coeficiente de Mortalidade Infantil está aumentando!
+
+Se nos contentássemos apenas com os valores calculados para o município intiero, sem desagregarmos por unidades territóriais menores, as informações descritas na tabela
+abaixo passariam despercebidas!!!
+É importante ressaltar que o CMI é um indicador de saúde extremamente sensível que traduz condições socioeconômicas, sanitárias e de acesso à atenção básica de saúde!
 
 
+| Distritos Administrativos | Estimate    | Std. Error  | t value     | Pr(>\|t\|) | APC  | IC                   |
+|---------------------------|-------------|-------------|-------------|------------|------|----------------------|
+| Morumbi                   | 0,087868484 | 0,020101494 | 4,371241554 | 0,01       | 9,18 | (   4.97  /  13.57 ) |
+| Pinheiros                 | 0,063614787 | 0,014202316 | 4,479183921 | 0,01       | 6,57 | (   3.64  /   9.58 ) |
+| Mooca                     | 0,042349534 | 0,010927933 | 3,875347163 | 0,01       | 4,33 | (   2.12  /   6.58 ) |
+| Jardim.Helena             | 0,016488385 | 0,005025355 | 3,281039043 | 0,02       | 1,66 | (   0.67  /   2.67 ) |
+| Sapopemba                 | 0,014771844 | 0,004973292 | 2,970234306 | 0,03       | 1,49 | (   0.50  /   2.48 ) |
 
 
+### Agora, os Distritos que apresentam APC negativo significante, isso é, onde o CMI apresenta tendência descrescente.
+
+| Distritos Administrativos | Estimate     | Std. Error  | t value      | Pr(>\|t\|) | APC   | IC                   |
+|---------------------------|--------------|-------------|--------------|------------|-------|----------------------|
+| Mandaqui                  | -0,025198745 | 0,008780321 | -2,869911608 | 0,05       | -2,49 | (  -4.15  /  -0.80 ) |
+| República                 | -0,039883098 | 0,011220655 | -3,554435826 | 0,02       | -3,91 | (  -6.00  /  -1.77 ) |
+| Penha                     | -0,040499699 | 0,014387332 | -2,814955414 | 0,04       | -3,97 | (  -6.64  /  -1.22 ) |
+| Anhanguera                | -0,052518679 | 0,017781585 | -2,953543221 | 0,03       | -5,12 | (  -8.37  /  -1.75 ) |
+| Água.Rasa                 | -0,058635964 | 0,017479211 | -3,354611648 | 0,02       | -5,69 | (  -8.87  /  -2.41 ) |
+| Perdizes                  | -0,10521978  | 0,026698366 | -3,941056925 | 0,01       | -9,99 | ( -14.58  /  -5.15 ) |
 
