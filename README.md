@@ -6,12 +6,21 @@ Vamos executar um script no R, aplicando de forma simples o método de Prais Win
 ## Qual fenômeno?
 
 Bom, a idéia do projeto é observar o comportamento do indicador Coeficiente de Mortalidade Infantil (CMI) no município de São Paulo (MSP) ao longo do tempo, captar a sua tendência temporal e quantificar a partir da regressão de Prais Winsten a porcentagem de variação anual desse indicador. 
+
+Lembrando que, o Coeficiente de Mortalidade Infantil é calculado pela razão entre o número de óbitos em menores de 1 ano em determinado tempo e espaço e o número de nascidos vivos para mesmo tempo e espaço multiplicada por 1.000
+
+
+#### Definição, Interpretação e Usos do Coeficiente de Mortalidade Infantil retirado do livro "INDICADORES BÁSICOS PARA A SAÚDE NO BRASIL: CONCEITOS E APLICAÇÕES"
+
+<p align="center">
+  <img src="https://raw.githubusercontent.com/Luccan97/Prais_Winsten/master/CMI_RIPSA.PNG"/>
+</p>
+
 Após vizualizarmos o comportamento do CMI para MSP, vamos desagregar essa informação por Distrito Administrativo (DA) e descobrir se existe uma iniquidade evidente atribuída ao fator espacial.
 
-#### Direto ao assunto!Temos a nossa série temporal anual (2013-2019) nas linhas, e os Distritos nas colunas.
 
-## Após coleta e organização, essa é a cara do banco de dados inicial:
-###### Fonte dos dados: Sistema de Informações de Mortalidade (SIM), 2020.
+> Após coleta e organização, essa é a cara do banco de dados inicial:
+###### Fonte dos dados: Sistema de Informações de Nascidos Vivos (SINASC), 2019.
 
 | Ano  | Água Rasa   | Alto de Pinheiros | Anhanguera  | Aricanduva  | Artur Alvim | Bela Vista  | Belém       | Bom Retiro  | Brás        | Brasilândia | Cachoeirinha | Cambuci     | Campo Belo  | Campo Grande | Campo Limpo | Cangaíba    | Capão Redondo | Carrão      | Casa Verde  | Cidade Ademar | Cidade Dutra | Cidade Líder | Cidade Tiradentes | Consolação  | Cursino     | Ermelino Matarazzo | Freguesia do Ó | Grajaú      | Guaianases  | Iguatemi    | Ipiranga    | Itaim Bibi  | Itaim Paulista | Itaquera    | Jabaquara   | Jaçanã      | Jaguara     | Jaguaré     | Jaraguá     | Jardim Ângela | Jardim Helena | Jardim São Luís | José Bonifácio | Lajeado     | Lapa        | Liberdade   | Limão       | Mandaqui    | Moema       | Mooca       | Morumbi     | Parelheiros | Pari        | Parque do Carmo | Pedreira    | Penha       | Perdizes    | Perus       | Pinheiros   | Pirituba    | Ponte Rasa  | Raposo Tavares | República   | Rio Pequeno | Sacomã      | Santa Cecília | Santana     | Santo Amaro | São Domingos | São Lucas   | São Mateus  | São Miguel  | São Rafael  | Sapopemba   | Saúde       | Sé          | Socorro     | Tatuapé     | Tremembé    | Tucuruvi    | Vila Andrade | Vila Curuçá | Vila Formosa | Vila Guilherme | Vila Jacuí  | Vila Leopoldina | Vila Maria  | Vila Mariana | Vila Matilde | Vila Medeiros | Vila Prudente | Vila Sônia  | MSP         |
 |------|-------------|-------------------|-------------|-------------|-------------|-------------|-------------|-------------|-------------|-------------|--------------|-------------|-------------|--------------|-------------|-------------|---------------|-------------|-------------|---------------|--------------|--------------|-------------------|-------------|-------------|--------------------|----------------|-------------|-------------|-------------|-------------|-------------|----------------|-------------|-------------|-------------|-------------|-------------|-------------|---------------|---------------|-----------------|----------------|-------------|-------------|-------------|-------------|-------------|-------------|-------------|-------------|-------------|-------------|-----------------|-------------|-------------|-------------|-------------|-------------|-------------|-------------|----------------|-------------|-------------|-------------|---------------|-------------|-------------|--------------|-------------|-------------|-------------|-------------|-------------|-------------|-------------|-------------|-------------|-------------|-------------|--------------|-------------|--------------|----------------|-------------|-----------------|-------------|--------------|--------------|---------------|---------------|-------------|-------------|
