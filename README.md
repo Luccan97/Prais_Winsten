@@ -1,5 +1,5 @@
 
-# Análise de série temporal com método de regressão linear de Prais Winsten
+# Análise de série temporal com método de regressão linear Prais Winsten
 
 Vamos executar um script no R, aplicando de forma simples o método de Prais Winsten para descever e organzizar informações temporais em fenômenos de interesse para a saúde pública!
 
