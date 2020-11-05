@@ -34,29 +34,31 @@ Após vizualizarmos o comportamento do CMI para MSP, vamos desagregar essa infor
 
 ### Agora, vamos para o RStudio!
 
-Vamos importar os dados csv para o ambiente do RStudio e Plotar um gráfico utilizando pacote ggplot2 e vizualizar a distribuição temporal do CMI para MSP.
+Vamos importar os dados em formato csv para o ambiente do RStudio e plotar um gráfico utilizando pacote ggplot2 para vizualizar a distribuição temporal do CMI para MSP.
 
 ```
 Rplot1 <- ggplot(Dados, aes(x = Ano, y = MSP)) + geom_line(color = 'red2', size = 1.8) +
   theme_light() + geom_smooth(method = 'lm', color = "blue4", se = FALSE) +
   labs(x ="", y ="CMI (a cada 1.000)")
 ```
-
+## Além de uma tímida tendência crescente, o gráfico não nos diz muito...
   <p align="center">
   <img src="https://raw.githubusercontent.com/Luccan97/Prais_Winsten/master/Rplot.png" />
 </p>
 
-## Além de uma tímida tendência crescente, o gráfico não nos diz muito... Portanto, vamos rodar o algorítmo de Prais Winsten
+## Portanto, vamos rodar o algorítmo de Prais Winsten.....
 
 ```
 setwd("C:\\Users\\User\\Desktop\\projetos\\script_pw")
 
 Dados <- read.csv("cmi_msp_da_2013_2019.csv", sep = ";", dec = ",", encoding = "windows-1250")
 
-# Filtrando só os dados para o município
+#Filtrando só os dados para o município
+
 MSP <- Dados[,c(1,94)]
 
 # Pacotes necessários
+
 library(prais)
 library(dplyr)
 
@@ -69,6 +71,7 @@ for (i in 2:dataset_length) {
 }
 
 # Função Prais Winsten
+
 pw_resultados <- lapply(names(MSP)[-1], function(a){
   resp <- paste0("`", a, "`")
   fmla <- paste(resp, "Ano", sep = "~")
@@ -99,9 +102,9 @@ write.table(pw_resultados_MSP, file = "pw_resultados.csv", sep = "\t", na = "", 
 
 ```
 
-### Vamos obsevar os resultados gerados pelo Prais Winsten!
-Temos que, para o município de São Paulo (2013-2019) a porcentagem de variação anual do CMI foi de 0,04. Isso é, uma tendência crescente, tendo em vista
-o valor positivo, porém, não é um valor estatísticamente significante, pois o valor de P é alto (0,69)
+### Resultados gerados:
+
+> Temos que, para o município de São Paulo (2013-2019) a porcentagem de variação anual (APC) do CMI foi de 0,04. Isso é, um valor positivo, que pode indicar uma tendência crescente. Porém, não é um valor estatísticamente significante, o valor de P é alto (0,69)
 
 | coluna | Estimate    | Std. Error  | t value     | Pr(>\|t\|) | APC  | IC                 |
 |--------|-------------|-------------|-------------|------------|------|--------------------|
@@ -112,8 +115,9 @@ o valor positivo, porém, não é um valor estatísticamente significante, pois 
 Esse método considera a existência de uma autocorrelação serial. Isso é, existe uma dependência entre valores seriais e os próprios valores anteriores.
 
 A grande vantagem desse Script que disponibilizo é a capacidade de rodar o método para um grande banco de dados simultâneamente.
-Agora que já vimos a tendência temporal para o Coeficiente de Mortalidade Infantil para o MSP, vamos rodar o mesmo script para todos os Distritos Administrativos!
 
+
+### Agora que já vimos a tendência temporal para o Coeficiente de Mortalidade Infantil para o MSP, vamos rodar o mesmo script para todos os Distritos Administrativos!
 ```
 dataset_length <- length(names(Dados))
 
@@ -148,7 +152,7 @@ write.table(pw_resultados_Dados, file = "pw_resultados.csv", sep = "\t", na = ""
 
 ```
 
-## Breve olhada na tabela de resultados gerada em poucos segundos após o script rodar:
+## Resultados gerados:
 | Distritos Administrativos | Estimate     | Std. Error  | t value      | Pr(>\|t\|) | APC   | IC                   |
 |---------------------------|--------------|-------------|--------------|------------|-------|----------------------|
 | Água.Rasa                 | -0,058635964 | 0,017479211 | -3,354611648 | 0,02       | -5,69 | (  -8.87  /  -2.41 ) |
@@ -246,9 +250,10 @@ write.table(pw_resultados_Dados, file = "pw_resultados.csv", sep = "\t", na = ""
 | MSP                       | 0,000356731  | 0,000836568 | 0,426422089  | 0,69       | 0,04  | (  -0.13  /   0.20 ) |
 
 
-### Agora, farei um filtro para observarmos apenas os resultados significantes (com valor P < 0,05)
+### Agora, para facilitar nossa vizualização farei um filtro para observarmos apenas os resultados significantes (com valor P < 0,05)
 
-Os Distritos que apresentam valor de P maior que 0,05, interpreta-se que existe uma tendência temporal estacionária! 
+> Para os Distritos que apresentam valor de P maior que 0,05, interpreta-se que existe uma tendência temporal estacionária! 
+
 ```
 P_sig <- filter(pw_resultados_Dados, pw_resultados_Dados$`Pr(>|t|)` <= 0.05)
 
@@ -260,7 +265,7 @@ write.table(P_sig_ordenado, file = "P_sig.csv", sep = "\t", na = "", quote = FAL
 
 ### Primeiro, vamos obsevrar os Distritos cuja porcentagem de variação anual é positiva! Ou seja, distritos onde o Coeficiente de Mortalidade Infantil está aumentando!
 
-Se nos contentássemos apenas com os valores calculados para o município intiero, sem desagregarmos por unidades territóriais menores, as informações descritas na tabela
+Se nos contentássemos apenas com os valores calculados para o município inteiro, sem desagregarmos por unidades territóriais menores, as informações descritas na tabela
 abaixo passariam despercebidas!!!
 É importante ressaltar que o CMI é um indicador de saúde extremamente sensível que traduz condições socioeconômicas, sanitárias e de acesso à atenção básica de saúde!
 
@@ -284,4 +289,16 @@ abaixo passariam despercebidas!!!
 | Anhanguera                | -0,052518679 | 0,017781585 | -2,953543221 | 0,03       | -5,12 | (  -8.37  /  -1.75 ) |
 | Água.Rasa                 | -0,058635964 | 0,017479211 | -3,354611648 | 0,02       | -5,69 | (  -8.87  /  -2.41 ) |
 | Perdizes                  | -0,10521978  | 0,026698366 | -3,941056925 | 0,01       | -9,99 | ( -14.58  /  -5.15 ) |
+
+
+Bom, para finalizar nossa breve análise, cuja maior intenção foi demonstrar a utilidade do script de prais winsten, principalmente em situações onde a base de dados é grande,
+Farei um mapa temático no Sistema de Informação Geográfica gratuíto QGIS 3.2 para entendermos a distribuição espacial dos coeficientes e distritos!
+
+#### Referências
+
+> ANTUNES, J. L. F.; CARDOSO, M. R. A. Uso da análise de séries temporais em estudos epidemiológicos. Epidemiologia e Serviços de Saúde, v. 24, n. 3, p. 565–576, 2015. 
+
+> Indicadores Básicos Para a Saúde No Brasil : Conceitos E Aplicações. 2008. 
+
+
 
