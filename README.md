@@ -291,15 +291,14 @@ abaixo passariam despercebidas!!!
 | Perdizes                  | -0,10521978  | 0,026698366 | -3,941056925 | 0,01       | -9,99 | ( -14.58  /  -5.15 ) |
 
 
-Bom, para finalizar nossa breve análise, cuja maior intenção foi demonstrar a utilidade do script de prais winsten, principalmente em situações onde a base de dados é grande,
-Reuni os Distritos Administrativos ( n = 96 ) nas subprefeituras a qual pertecem ( n = 32 ) e plotei um gráfico para vizualizarmos melhor o comportamento temporal do CMI
+###### Bom, para finalizar nossa breve análise, cuja maior intenção foi demonstrar a utilidade do script de prais winsten, principalmente em situações onde a base de dados é grande,reuni os Distritos Administrativos ( n = 96 ) nas subprefeituras a qual pertecem ( n = 32 ) e plotei um gráfico para vizualizarmos melhor o comportamento temporal do CMI
 
   <p align="center">
   <img src="https://raw.githubusercontent.com/Luccan97/Prais_Winsten/master/CMI_2013_2019_page-0001.jpg" />
 </p>
 
-É nítido como o comportamento dos indicadores variam de um território para outro, entender essa diferença faz parte do principio de equidade. 
-Sendo assim, um olhar mais atento as especificidades territoriais e ainda, observando a tendência temporal de forma responsável, poderemos ter um melhor diagnóstico dos fenômenos de saúde pública/coletiva!
+###### É nítido como o comportamento dos indicadores variam de um território para outro, entender essa diferença faz parte do principio de equidade. 
+Sendo assim, a partir de um olhar mais atento as especificidades territoriais e ainda, observando a tendência temporal de forma responsável, poderemos ter um melhor diagnóstico dos processos e fenômenos de saúde pública/coletiva!
 #### Referências
 
 > ANTUNES, J. L. F.; CARDOSO, M. R. A. Uso da análise de séries temporais em estudos epidemiológicos. Epidemiologia e Serviços de Saúde, v. 24, n. 3, p. 565–576, 2015. 
